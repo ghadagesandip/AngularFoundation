@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="project">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-ng-bind="title">Foundation | Welcome</title>
+    <link rel="stylesheet" href="css/foundation.min.css" />
+
+</head>
+<body >
+    <div class="row">
+        <div class="large-12 columns">
+            <h1>Welcome to Angular App with Foundation CSS </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+
+            <div class="panel" ng-view>
+                Loading please wait...
+            </div>
+        </div>
+    </div>
+    <script src="js/build/angular-foundation.min.js"></script>
+<!--
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    -->
+    <script src="js/app.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+</body>
+</html>

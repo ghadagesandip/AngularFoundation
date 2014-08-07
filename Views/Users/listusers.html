@@ -1,0 +1,40 @@
+<ul class="breadcrumbs">
+    <li><a href="#">Home</a></li>
+    <li class="current"><a>Users</a></li>
+</ul>
+
+<div class="row">
+    <div class="large-12 columns">
+        <input type="text" data-ng-model="searchText" placeholder="Search...">
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <table class="large-12 columns">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Role</th>
+                    <th>Name</th>
+                    <th>Usernmae</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr data-ng-repeat="user in users | filter:searchText">
+                    <td data-ng-bind="user.id"></td>
+                    <td data-ng-bind="user.role.role"></td>
+                    <td data-ng-bind="user.first_name+' '+user.last_name"></td>
+                    <td data-ng-bind="user.username"></td>
+                    <td data-ng-bind="user.email"></td>
+                    <td data-ng-bind="user.gender"></td>
+                    <td data-ng-bind="user.address"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
