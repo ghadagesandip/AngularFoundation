@@ -27,7 +27,7 @@
             <tbody>
                 <tr data-ng-repeat="user in users | filter:searchText">
                     <td data-ng-bind="user.id"></td>
-                    <td data-ng-bind="user.role.role"></td>
+                    <td data-ng-bind="user.role.name"></td>
                     <td data-ng-bind="user.first_name+' '+user.last_name"></td>
                     <td data-ng-bind="user.username"></td>
                     <td data-ng-bind="user.email"></td>

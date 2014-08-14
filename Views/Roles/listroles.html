@@ -1,12 +1,17 @@
 <ul class="breadcrumbs">
     <li><a href="#">Home</a></li>
-    <li class="current"><a>Users</a></li>
+    <li class="current"><a>Roles</a></li>
 </ul>
 
 <div class="row">
-    <div class="large-12 columns">
+    <div class="large-4 columns"><a class="button tiny " href="#/add-new-role">Add Role</a></div>
+    <div class="large-4 columns">
        <input type="text" ng-model="searchText" placeholder="Search..." />
     </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns" data-ng-bind="role.status"></div>
 </div>
 
 <div class="row">
@@ -18,14 +23,20 @@
                     <th>Role Name</th>
                     <th>Created</th>
                     <th>Modified</th>
+                    <th>Option</th>
                 </tr>
             </thead>
             <tbody>
                 <tr data-ng-repeat="role in roles |filter:searchText" >
                     <td data-ng-bind="role.id"></td>
-                    <td data-ng-bind="role.role"></td>
+                    <td data-ng-bind="role.name"></td>
                     <td data-ng-bind="role.created_at"></td>
                     <td data-ng-bind="role.updated_at"></td>
+                    <td>
+                        <a class="button tiny small" href="#/update-role/{{role.id}}">Edit</a>
+                        <a class="button tiny small" href="#/view-role/{{role.id}}">View</a>
+                        <a class="button alert tiny small" href="#/delete-role/{{role.id}}">Delete</a>
+                    </td>
                 </tr>
             </tbody>
 
