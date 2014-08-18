@@ -36,8 +36,8 @@ var app = angular.module('project', ['ngRoute'])
             getRole:function(id){
                 return $http.get(baseUrl+'getRole/'+id);
             },
-            saveRole : function(post){
-                return $http.post(baseUrl+'savePost',post)
+            upadateRole : function(post){
+                return $http.post(baseUrl+'upadateRole',post)
             }
         }
     });
@@ -92,20 +92,20 @@ var app = angular.module('project', ['ngRoute'])
 
 
     app.controller('UpdateRole',['$scope','$routeParams','$location','RoleFactory',function($scope,$routeParams,$location,RoleFactory){
-
         RoleFactory.getRole($routeParams.roleId)
             .success(function(result){
-                    $scope.role = result;
+                 $scope.role = result;
             })
             .error(function(error){
+        });
 
-            });
+        $scope.upadateRole = function(){
 
-        $scope.saveRole = function(){
-            RoleFactory.saveRole($scope.role)
-                .success(function(){
+            RoleFactory.upadateRole($scope.role)
+                .success(function(data,status){
+                    console.log(data); return false;
                     $scope.role = {}
-                    $location.path('/');
+                    $location.path('/roles');
                 })
         }
     }]);
