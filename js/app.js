@@ -15,6 +15,7 @@ var app = angular.module('project', ['ngRoute'])
             .when('/bug-types',{title:"Bug types",controller:'ListBugTypeCtrl',templateUrl:'Views/BugTypes/listbugtypes.html'})
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
+            .when('/todo',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
             .otherwise({redirectTo:'/'});
     });
 
@@ -24,6 +25,8 @@ var app = angular.module('project', ['ngRoute'])
             $rootScope.title = current.$$route.title;
         });
     }]);
+
+
 
 
 
@@ -53,6 +56,30 @@ var app = angular.module('project', ['ngRoute'])
 
 
 
+    app.factory('TodoFactory',function($http,baseUrl){
+        return {
+            getTodos : function(){
+                return $http.get(baseUrl+'getTotos');
+            }
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -61,7 +88,8 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
     app.controller('ListRoleCtrl',['$scope','RoleFactory',function($scope,RoleFactory){
-        showRoles();
+
+        //showRoles();
         function showRoles(){
             RoleFactory.getRoles()
                 .success(function (result) {
@@ -137,4 +165,21 @@ var app = angular.module('project', ['ngRoute'])
 
     app.controller('BugCtrl',['$scope',function($scope){
 
+    }]);
+
+    app.controller('TodoCtrl',['$scope','TodoFactory',function($scope,TodoFactory){
+        $scope.todos =    [
+            {"id":"1","title":"Task 1 ","description":"Complete task 1 by today","created_at":"2014-09-15 14:23:25","updated_at":"2014-09-15 14:23:25"},
+            {"id":"2","title":"Task 2",description: "Complete task 2 by tomorrow","created_at":"2014-09-15 14:23:25","updated_at":"2014-09-15 14:23:25"}
+        ];
+        //showTodos();
+        function showTodos(){
+            TodoFactory.getTodos()
+                .success(function(result){
+                    $scope.todos = result;
+                })
+                .error(function(error){
+                    $scope.status = 'Error occured while fetching data'+error.statusText;
+                })
+        }
     }]);
