@@ -34,55 +34,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="0" selection-start="3644" selection-end="3644" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add-role.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Views/Roles/add-role.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update-role.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Views/Roles/update-role.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="29" selection-start="425" selection-end="425" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="listroles.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Views/Roles/listroles.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="6" selection-start="449" selection-end="449" vertical-scroll-proportion="-6.25">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="package.json" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="5" selection-start="374" selection-end="374" vertical-scroll-proportion="0.30555555">
+            <state line="11" column="6" selection-start="375" selection-end="375" vertical-scroll-proportion="0.30555555">
               <folding />
             </state>
           </provider>
@@ -349,23 +304,16 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/Views/Roles/listroles.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="0" selection-start="3644" selection-end="3644" vertical-scroll-proportion="0.0">
+        <state line="14" column="6" selection-start="449" selection-end="449" vertical-scroll-proportion="0.2777778">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Views/Roles/update-role.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="29" selection-start="425" selection-end="425" vertical-scroll-proportion="0.0">
+        <state line="17" column="29" selection-start="425" selection-end="425" vertical-scroll-proportion="0.3611111">
           <folding />
         </state>
       </provider>
@@ -377,16 +325,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Views/Roles/listroles.html">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="6" selection-start="449" selection-end="449" vertical-scroll-proportion="-6.25">
+        <state line="8" column="0" selection-start="299" selection-end="299" vertical-scroll-proportion="0.027777778">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="0" selection-start="3644" selection-end="3644" vertical-scroll-proportion="0.027223231">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="5" selection-start="374" selection-end="374" vertical-scroll-proportion="0.30555555">
+        <state line="11" column="6" selection-start="375" selection-end="375" vertical-scroll-proportion="0.30555555">
           <folding />
         </state>
       </provider>
