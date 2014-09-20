@@ -16,6 +16,7 @@ var app = angular.module('project', ['ngRoute'])
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
             .when('/todo',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
+            .when('/add-new-todo',{title:"Add Todo",controller:"AddTodoCtrl",templateUrl:"Views/Todos/add-todo.html"})
             .otherwise({redirectTo:'/'});
     });
 
@@ -60,6 +61,9 @@ var app = angular.module('project', ['ngRoute'])
         return {
             getTodos : function(){
                 return $http.get(baseUrl+'getTotos');
+            },
+            saveTodo:function(todo){
+                return $http.post(baseUrl+'saveTodo');
             }
         }
     });
@@ -89,7 +93,7 @@ var app = angular.module('project', ['ngRoute'])
 
     app.controller('ListRoleCtrl',['$scope','RoleFactory',function($scope,RoleFactory){
 
-        //showRoles();
+        showRoles();
         function showRoles(){
             RoleFactory.getRoles()
                 .success(function (result) {
@@ -182,4 +186,19 @@ var app = angular.module('project', ['ngRoute'])
                     $scope.status = 'Error occured while fetching data'+error.statusText;
                 })
         }
+    }]);
+
+
+    app.controller('AddTodoCtrl',['$scope','$location','TodoFactory',function($scope,$location,TodoFactory){
+        $scope.saveTodo = function(data){
+            TodoFactory.saveTodo($scope.todo)
+                .success(function(result){
+                    $scope.todo = {}
+                    $location.path('/todos');
+                })
+                .error(function(){
+                    $scope.status = "Sorry, unable to save todo!"
+                })
+        }
+
     }]);
