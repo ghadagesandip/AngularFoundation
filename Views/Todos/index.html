@@ -22,8 +22,6 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Created</th>
-                <th>Modified</th>
                 <th>Option</th>
             </tr>
             </thead>
@@ -32,8 +30,6 @@
                 <td data-ng-bind="todo.id"></td>
                 <td data-ng-bind="todo.title"></td>
                 <td data-ng-bind="todo.description"></td>
-                <td data-ng-bind="todo.created_at"></td>
-                <td data-ng-bind="todo.updated_at"></td>
                 <td>
                     <a class="button tiny small" href="#/view-todo/{{todo.id}}">View</a>
                     <a class="button tiny small" href="#/update-todo/{{todo.id}}">Edit</a>

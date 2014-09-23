@@ -1,6 +1,6 @@
 var app = angular.module('project', ['ngRoute'])
 
-    app.value('baseUrl','http://localhost/BugTrackerApp/public/');
+    app.value('baseUrl','http://10.0.11.98/BugTrackerApp/public/');
     app.config(function($routeProvider) {
         $routeProvider
             .when('/', { title:"Dashboard", controller:'DashboardCtrl', templateUrl:'Views/dashboard.html' })
@@ -60,7 +60,10 @@ var app = angular.module('project', ['ngRoute'])
     app.factory('TodoFactory',function($http,baseUrl){
         return {
             getTodos : function(){
-                return $http.get(baseUrl+'getTodos');
+                return $http.get(baseUrl+'getTodos?&user_id='+1);
+            },
+            saveTodo : function(todo){
+                return $http.post(baseUrl+'saveTodo',todo);
             }
         }
     });
@@ -168,22 +171,32 @@ var app = angular.module('project', ['ngRoute'])
 
     }]);
 
+
     app.controller('TodoCtrl',['$scope','TodoFactory',function($scope,TodoFactory){
-        showTodos();
-        function showTodos(){
-            TodoFactory.getTodos()
+
+          TodoFactory.getTodos()
                 .success(function(result){
                     $scope.todos = result;
                 })
                 .error(function(error){
                     $scope.status = 'Error occured while fetching data'+error.statusText;
                 })
-        }
+
     }]);
 
 
-    app.controller('AddTodoCtrl',['$scope','TodoFactory',function($scope,TodoFactory){
-         $scope.addTodo = function(){
+    app.controller('AddTodoCtrl',['$scope','$location','TodoFactory',function($scope,$location,TodoFactory){
+        $scope.saveTodo = function(){
+            $scope.todo.user_id = 1;
+            $scope.todo.project_id = 1;
+            TodoFactory.saveTodo($scope.todo)
+                .success(function(result){
+                    $scope.todos = {}
+                    $scope.status = 'todo saved';
+                    $location.path('/todos');
+                })
+                .error(function(){
 
-         }
+                });
+        }
     }]);
