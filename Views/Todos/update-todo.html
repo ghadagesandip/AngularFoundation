@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="breadcrumbs">
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/todos">Tdodos</a></li>
+            <li>Update Tdod</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <span ng-show="status" class="error" data-ng-bind="status"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <form novalidate name="frmUpdateTodo" ng-submit="updateTodo()">
+
+            <div class="row">
+                <div class="columns large-5">
+                    <label>
+                        Title :
+                        <input type="text" data-ng-model="todo.title" name="title" required/>
+                        <div ng-show="frmUpdateTodo.title.$dirty && frmUpdateTodo.title.$invalid">
+                            <span class="error" ng-show="frmUpdateTodo.title.$error.required">Please enter title </span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label>
+                        Description :
+                        <textarea name="description" data-ng-model="todo.description" cols="30" rows="10"></textarea>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input type="submit" value="Update" nd-disabled="frmUpdateTodo.$invalid" class="button small tiny"/>
+                    <a href="#/todos" class="button small tiny secondary">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

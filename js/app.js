@@ -15,8 +15,10 @@ var app = angular.module('project', ['ngRoute'])
             .when('/bug-types',{title:"Bug types",controller:'ListBugTypeCtrl',templateUrl:'Views/BugTypes/listbugtypes.html'})
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
+
             .when('/todos',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
-            .when('/add-new-todo',{title:"TODO List",controller:"AddTodoCtrl",templateUrl:'Views/Todos/add-todo.html'})
+            .when('/add-new-todo',{title:"Add TODO",controller:"AddTodoCtrl",templateUrl:'Views/Todos/add-todo.html'})
+            .when('/update-todo/:id',{title:"Update TODO",controller:"UpdateTodoCtrl",templateUrl:'Views/Todos/update-todo.html'})
             .otherwise({redirectTo:'/'});
     });
 
@@ -60,10 +62,16 @@ var app = angular.module('project', ['ngRoute'])
     app.factory('TodoFactory',function($http,baseUrl){
         return {
             getTodos : function(){
-                return $http.get(baseUrl+'getTodos?&user_id='+1);
+                return $http.get(baseUrl+'getTodos/'+1);
             },
             saveTodo : function(todo){
                 return $http.post(baseUrl+'saveTodo',todo);
+            },
+            getTodo : function(id){
+                return $http.get(baseUrl+'getTodo/'+id);
+            },
+            updateTodo : function(id,todo){
+                return $http.put(baseUrl+'updateTodo/'+id,todo);
             }
         }
     });
@@ -198,5 +206,30 @@ var app = angular.module('project', ['ngRoute'])
                 .error(function(){
 
                 });
+        }
+    }]);
+
+
+    app.controller('UpdateTodoCtrl',['$scope','$routeParams','$location','TodoFactory',function($scope,$routeParams,$location,TodoFactory){
+        TodoFactory.getTodo($routeParams.id)
+            .success(function(data,status,headers,config){
+               $scope.todo = data;
+            })
+            .error(function(data, status, headers, config){
+                $scope.status = "Error occured while fetching data";
+            });
+
+
+        $scope.updateTodo = function(){
+            TodoFactory.updateTodo($routeParams.id,$scope.todo)
+                .success(function(data, status, headers, config){
+                    if(status ==200){
+                        $location.path('/todos');
+                    }
+                })
+                .error(function(data, status, headers, config){
+
+                });
+
         }
     }]);
