@@ -1,5 +1,4 @@
 var app = angular.module('project', ['ngRoute'])
-
     app.value('baseUrl','http://10.0.11.98/BugTrackerApp/public/');
     app.config(function($routeProvider) {
         $routeProvider
@@ -77,7 +76,13 @@ var app = angular.module('project', ['ngRoute'])
     });
 
 
-
+    app.factory("Project",function($http,baseUrl){
+        return {
+            getAllActiveProjectListByUser : function(){
+                return $http.get(baseUrl+'getAllActiveProjectListByUser/'+1);
+            }
+        }
+    });
 
 
 
@@ -194,6 +199,13 @@ var app = angular.module('project', ['ngRoute'])
 
 
     app.controller('AddTodoCtrl',['$scope','$location','TodoFactory',function($scope,$location,TodoFactory){
+
+        $scope.projects = [
+            {id:1, name:'ESI-QMS Project'},
+            {id:2, name:'Pixcelcms Project'},
+            {id:3, name:'Myfarah Project'},
+        ];
+
         $scope.saveTodo = function(){
             $scope.todo.user_id = 1;
             $scope.todo.project_id = 1;
