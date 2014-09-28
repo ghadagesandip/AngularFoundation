@@ -2,7 +2,8 @@ var app = angular.module('project', ['ngRoute'])
     app.value('baseUrl','http://10.0.11.98/BugTrackerApp/public/');
     app.config(function($routeProvider) {
         $routeProvider
-            .when('/', { title:"Dashboard", controller:'DashboardCtrl', templateUrl:'Views/dashboard.html' })
+            .when('/', { title:"Login", controller:'LoginCtrl', templateUrl:'Views/login.html' })
+            .when('/home', { title:"Home", controller:'DashboardCtrl', templateUrl:'Views/dashboard.html' })
 
             .when('/roles',{title:"Role",controller:'ListRoleCtrl',templateUrl:'Views/Roles/listroles.html'})
             .when('/add-new-role',{title:"Add Role",controller:'AddRoleCtrl',templateUrl:'Views/Roles/add-role.html'})
@@ -242,6 +243,10 @@ var app = angular.module('project', ['ngRoute'])
                 .error(function(data, status, headers, config){
 
                 });
-
         }
+    }]);
+
+
+    app.controller('LoginCtrl',['$scope','$window',function($scope,$window){
+
     }]);

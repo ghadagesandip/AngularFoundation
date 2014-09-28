@@ -1,0 +1,152 @@
+<div class="row">
+    <div class="small-12 columns">
+        <div class="row">
+            <div class="large-6 columns">
+                <fieldset>
+                    <legend>
+                        Login
+                    </legend>
+                    <form action="" novalidate name="loginForm">
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Email :
+                                    <input type="email" name="email" data-ng-model="login.email" required/>
+                                    <div ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
+                                        <span class="error" ng-show="loginForm.email.$error.required"> Please enter email adddress</span>
+                                        <span class="error" ng-show="loginForm.email.$error.email">Please enter valid email address </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Password :
+                                </label>
+                                <input type="password" name="password" data-ng-model="login.password" required/>
+                                <div ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+                                    <span class="error" ng-show="loginForm.password.$error.required"> Please enter password</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <input ng-disabled="loginForm.$invalid" type="submit" value="Login" class="button tiny small-12"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <a href="#/forgot-password">Forgot Password?</a>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+
+            </div>
+
+            <div class="large-6 columns">
+                <fieldset >
+                    <legend>Sign up</legend>
+                    <form action="" novalidate name="SignUpForm">
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    First Name :
+                                    <input type="text" name="first_name" data-ng-model="signup.first_name" required/>
+                                    <div ng-show="SignUpForm.first_name.$dirty && SignUpForm.first_name.$invalid">
+                                        <span class="error" ng-show="SignUpForm.first_name.$error.required"> Please enter first</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Last Name :
+                                    <input type="text" name="last_name" data-ng-model="signup.last_name" required/>
+                                    <div ng-show="SignUpForm.last_name.$dirty && SignUpForm.last_name.$invalid">
+                                        <span class="error" ng-show="SignUpForm.last_name.$error.required"> Please enter last name</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Username :
+                                    <input type="text" name="username" data-ng-model="signup.username" required/>
+                                    <div ng-show="SignUpForm.username.$dirty && SignUpForm.username.$invalid">
+                                        <span class="error" ng-show="SignUpForm.username.$error.required"> Please enter username</span>
+                                        <span class="error" ng-show="SignUpForm.username.$error.pattern">Please enter valid username </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Email :
+                                    <input type="email" name="email" data-ng-model="signup.email" required/>
+                                    <div ng-show="SignUpForm.email.$dirty && SignUpForm.email.$invalid">
+                                        <span class="error" ng-show="SignUpForm.email.$error.required"> Please enter email adddress</span>
+                                        <span class="error" ng-show="SignUpForm.email.$error.email">Please enter valid email address </span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Password :
+                                </label>
+                                <input type="password" name="password" data-ng-model="signup.password" required/>
+                                <div ng-show="SignUpForm.password.$dirty && SignUpForm.password.$invalid">
+                                    <span class="error" ng-show="SignUpForm.password.$error.required"> Please enter password</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Confirm Password :
+                                </label>
+                                <input type="password" name="password" data-ng-model="signup.password" required/>
+                                <div ng-show="SignUpForm.password.$dirty && SignUpForm.password.$invalid">
+                                    <span class="error" ng-show="SignUpForm.password.$error.required"> Please enter password</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <label for="">
+                                    Gender :
+                                </label>
+                                <input type="radio" data-ng-model="signup.gender" name="gender" value="male"/> Male
+                                <input type="radio" data-ng-model="signup.gender" name="gender" value="female"/> Female
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-8 columns">
+                                <input ng-disabled="SignUpForm.$invalid" type="submit" value="Sign Up" class="button tiny small-12"/>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
