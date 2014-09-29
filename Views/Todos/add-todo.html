@@ -51,8 +51,17 @@
             </div>
 
             <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Status :
+                    </label>
+                    <input type="checkbox" ng-change="UpdateStatus()" ng-false-value="'0'" ng-true-value="'1'"  data-ng-model="todo.todo_status" name="todo_status"/>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="large-12 columns">
-                    <input type="submit" ng-click="saveTodo()" value="Add" ng-disabled="frmAddTodo.$invalid" class="button small tiny"/>
+                    <input type="submit"  ng-click="saveTodo()" value="Add" ng-disabled="frmAddTodo.$invalid" class="button small tiny"/>
                     <a href="#/todos" class="button small secondary tiny">Cancel</a>
                 </div>
             </div>

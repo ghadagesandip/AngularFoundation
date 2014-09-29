@@ -10,11 +10,10 @@
                         <div class="row">
                             <div class="large-8 columns">
                                 <label for="">
-                                    Email :
-                                    <input type="email" name="email" data-ng-model="login.email" required/>
-                                    <div ng-show="loginForm.email.$dirty && loginForm.email.$invalid">
-                                        <span class="error" ng-show="loginForm.email.$error.required"> Please enter email adddress</span>
-                                        <span class="error" ng-show="loginForm.email.$error.email">Please enter valid email address </span>
+                                    Username :
+                                    <input type="text" name="username" data-ng-model="login.username" required/>
+                                    <div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+                                        <span class="error" ng-show="loginForm.username.$error.required"> Please enter email adddress</span>
                                     </div>
                                 </label>
                             </div>
@@ -34,7 +33,7 @@
 
                         <div class="row">
                             <div class="large-8 columns">
-                                <input ng-disabled="loginForm.$invalid" type="submit" value="Login" class="button tiny small-12"/>
+                                <input ng-click="loginUser()" ng-disabled="loginForm.$invalid" type="submit" value="Login" class="button tiny small-12"/>
                             </div>
                         </div>
 

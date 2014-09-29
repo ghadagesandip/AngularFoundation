@@ -6,13 +6,16 @@
 <div class="row">
     <div class="large-4 columns"><a class="button tiny " href="#/add-new-todo">Add Todo</a></div>
     <div class="large-4 columns">
+        <div class="alert-box success tiny button" data-alert="" ng-show="status">
+            {{status}}
+            <a class="close" href="">×</a>
+        </div>
+    </div>
+    <div class="large-4 columns">
         <input type="text" ng-model="searchText" placeholder="Add text to search..." />
     </div>
 </div>
 
-<div class="row">
-    <div class="large-12 columns" data-ng-bind="todo.status"></div>
-</div>
 
 <div class="row">
     <div class="large-12 columns">
@@ -26,16 +29,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="todo in todos |filter:searchText" >
+            <tr data-ng-repeat="todo in filtered = (todos |filter:searchText)" >
                 <td data-ng-bind="todo.id"></td>
                 <td data-ng-bind="todo.title"></td>
                 <td data-ng-bind="todo.description"></td>
                 <td>
                     <a class="button tiny small" href="#/view-todo/{{todo.id}}">View</a>
                     <a class="button tiny small" href="#/update-todo/{{todo.id}}">Edit</a>
-                    <a class="button alert tiny small" href="#/delete-todo/{{todo.id}}">Delete</a>
+                    <a class="button alert tiny small" ng-click="deleteTodo($index)">Delete</a>
                 </td>
             </tr>
+
+            <tr ng-show="!filtered.length">
+                <td colspan="6" class="text-center">
+                    <div class="round alert label">No records found{{todos.length}}</div>
+                </td>
+            </tr>
+
             </tbody>
 
         </table>

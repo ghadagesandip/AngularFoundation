@@ -16,16 +16,6 @@ module.exports = function(grunt) {
             }
         },
 
-        concat: {
-            myfarah_home: {
-                src: [
-                    'css/popup.css', 'css/styles_layouts.css', 'css/style.css', 'css/fileuploader.css','css/uniform.default.css',
-                    'css/login_popup.css','css/validationEngine.jquery.css','css/ui-custom/jquery-ui.css'
-                ],
-                dest: 'css/build/myfarah_home.css'
-            }
-        },
-
         cssmin: {
 
             myfarah_home: {
@@ -38,10 +28,9 @@ module.exports = function(grunt) {
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify', 'concat']);
+    grunt.registerTask('default', ['uglify', 'cssmin']);
 
 };
