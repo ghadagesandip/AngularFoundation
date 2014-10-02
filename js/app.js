@@ -17,8 +17,10 @@ var app = angular.module('project', ['ngRoute'])
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
 
             .when('/todos',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
+            .when('/todos/project/:projectId',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
             .when('/add-new-todo',{title:"Add TODO",controller:"AddTodoCtrl",templateUrl:'Views/Todos/add-todo.html'})
             .when('/update-todo/:id',{title:"Update TODO",controller:"UpdateTodoCtrl",templateUrl:'Views/Todos/update-todo.html'})
+            .when('/view-todo/:id',{title:"View TODO",controller:"ViewTodoCtrl",templateUrl:'Views/Todos/view-todo.html'})
             .otherwise({redirectTo:'/'});
     }]);
 
@@ -63,11 +65,10 @@ var app = angular.module('project', ['ngRoute'])
 
     app.factory('TodoFactory',['$http','baseUrl',function($http,baseUrl){
         return {
-            getTodos : function(){
-                return $http.get(baseUrl+'getTodos/'+1);
+            getTodos : function(userId){
+                return $http.get(baseUrl+'getTodos/'+userId);
             },
             saveTodo : function(todo){
-
                 return $http.post(baseUrl+'saveTodo',todo);
             },
             getTodo : function(id){
@@ -121,8 +122,8 @@ var app = angular.module('project', ['ngRoute'])
 
     app.controller('ListRoleCtrl',['$scope','RoleFactory',function($scope,RoleFactory){
 
-        //showRoles();
-        function showRoles(){
+
+
             RoleFactory.getRoles()
                 .success(function (result) {
                     $scope.roles = result
@@ -131,7 +132,7 @@ var app = angular.module('project', ['ngRoute'])
                     $scope.status = 'Unable to load customer data: ' + error.message;
                 });
 
-        }
+
     }]);
 
     app.controller('AddRoleCtrl',['$scope','RoleFactory',function($scope,RoleFactory){
@@ -200,11 +201,11 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
 
+
+
     app.controller('TodoCtrl',['$scope','TodoFactory',function($scope,TodoFactory){
 
-
-
-          TodoFactory.getTodos()
+          TodoFactory.getTodos(1)
                 .success(function(result){
                     $scope.todos = result;
                 })
@@ -231,7 +232,7 @@ var app = angular.module('project', ['ngRoute'])
 
     app.controller('AddTodoCtrl',['$scope','$location','TodoFactory',function($scope,$location,TodoFactory){
 
-        $scope.todo.todo_status = true;
+
 
         $scope.projects = [
             {id:1, name:'ESI-QMS Project'},
@@ -241,8 +242,6 @@ var app = angular.module('project', ['ngRoute'])
 
 
         $scope.saveTodo = function(){
-
-            console.log($scope.todo); return false;
 
             $scope.todo.user_id = 1;
             $scope.todo.project_id = 1;
@@ -257,10 +256,24 @@ var app = angular.module('project', ['ngRoute'])
                 });
         }
 
+
         $scope.UpdateStatus = function(){
             $scope.todo.todo_status = $scope.todo.todo_status;
         }
     }]);
+
+
+    app.controller('ViewTodoCtrl',['$scope','$routeParams','TodoFactory',function($scope,$routeParams,TodoFactory){
+        TodoFactory.getTodo($routeParams.id)
+            .success(function(data,status,headers,config){
+                console.log(data);
+                $scope.todo = data;
+            })
+            .error(function(data,status,headers,config){
+
+            });
+    }]);
+
 
 
     app.controller('UpdateTodoCtrl',['$scope','$routeParams','$location','TodoFactory',function($scope,$routeParams,$location,TodoFactory){
