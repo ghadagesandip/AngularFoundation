@@ -8,9 +8,8 @@
     <div class="large-6 columns">
         <dl class="sub-nav">
             <dt>project:</dt>
-            <dd class="active"><a href="#/todos">All</a></dd>
-            <dd><a href="#/todos/myfarah">Myfarah</a></dd>
-            <dd><a href="#/todos/pixel">Pixelcms</a></dd>
+            <dd ng-class="{active : activeproject == 'all'}"><a href="#/todos">All</a></dd>
+            <dd ng-class="{active : activeproject == projectuid}"  data-ng-repeat="(projectuid, projectname) in projects"><a href="#/todos/project/{{projectuid}}">{{projectname}}</a></dd>
         </dl>
     </div>
 </div>
@@ -49,7 +48,7 @@
                 <td data-ng-bind="todo.description"></td>
                 <td>
                     <a class="button tiny small" href="#/view-todo/{{todo.id}}">View</a>
-                    <a class="button tiny small" href="#/update-todo/{{todo.id}}">Edit</a>
+                    <a class="button success tiny small" href="#/update-todo/{{todo.id}}">Edit</a>
                     <a class="button alert tiny small" ng-click="deleteTodo($index)">Delete</a>
                 </td>
             </tr>

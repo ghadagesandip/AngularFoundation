@@ -3,6 +3,8 @@ var app = angular.module('project', ['ngRoute'])
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', { title:"Login", controller:'LoginCtrl', templateUrl:'Views/login.html' })
+            .when('/login', { title:"Login", controller:'LoginCtrl', templateUrl:'Views/login.html' })
+            .when('/logout', { title:"Logout", controller:'LogoutCtrl', template:'' })
             .when('/home', { title:"Home", controller:'DashboardCtrl', templateUrl:'Views/dashboard.html' })
 
             .when('/roles',{title:"Role",controller:'ListRoleCtrl',templateUrl:'Views/Roles/listroles.html'})
@@ -11,7 +13,7 @@ var app = angular.module('project', ['ngRoute'])
             .when('/update-role/:roleId',{title:"Update Role",controller:"UpdateRole",templateUrl:'Views/Roles/update-role.html'})
 
             .when('/users',{title:"Users",controller:'ListUsersCtrl',templateUrl:'Views/Users/listusers.html'})
-            .when('/projects',{title:"Project",controller:'ListProjectCtrl',templateUrl:'Views/Projects/listprojects.html'})
+            .when('/my-projects',{title:"Project",controller:'ListProjectCtrl',templateUrl:'Views/MyProjects/listprojects.html'})
             .when('/bug-types',{title:"Bug types",controller:'ListBugTypeCtrl',templateUrl:'Views/BugTypes/listbugtypes.html'})
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
@@ -32,6 +34,35 @@ var app = angular.module('project', ['ngRoute'])
             $rootScope.title = current.$$route.title;
         });
     }]);
+
+
+
+
+
+    app.directive('error',function(){
+       return{
+           restrict:"E",
+           replace:true,
+           scope:{
+               feedback:"="
+           },
+           template:"<div class='round alert label'> {{feedback}}</div>"
+       }
+    });
+
+
+    app.directive('setactive',function(){
+       return {
+           scope :{},
+           link : function(scope, element, attr){
+                element.on('click',function(){
+                    element.parent().children().removeClass('active');
+                    element.addClass('active');
+                })
+           }
+       }
+    });
+
 
 
 
@@ -63,11 +94,14 @@ var app = angular.module('project', ['ngRoute'])
 
 
 
-    app.factory('TodoFactory',['$http','baseUrl',function($http,baseUrl){
+    app.factory('TodoFactory',['$http','loginFact','$location','baseUrl',function($http, loginFact, $location, baseUrl){
+
         return {
-            getTodos : function(userId){
-                return $http.get(baseUrl+'getTodos/'+userId);
+            getTodos : function(projectId){
+                projectId = typeof projectId !== 'undefined' ? '/'+projectId : '';
+                return $http.get(baseUrl+'getTodos/'+loginFact.getCookie('userId')+projectId);
             },
+
             saveTodo : function(todo){
                 return $http.post(baseUrl+'saveTodo',todo);
             },
@@ -93,13 +127,61 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
 
-    app.factory('loginFact',['$window',function(){
+    app.factory('loginFact',['$http','$location','baseUrl',function($http, $location, baseUrl){
         return {
-            authenticate : function(credentials){
-                if(credentials.username ==='sandip' && credentials.password=='sandip'){
 
+            authenticate : function(credentials){
+                return $http.post(baseUrl+'sign-in',credentials);
+            },
+
+            setCookie : function(cname,cvalue,exdays){
+                exdays = typeof exdays !== 'undefined' ? exdays : 360;
+                var d = new Date();
+                d.setDate(d.getDate()+(exdays*24*60*60*1000));
+                var  expires = "expires="+ d.toUTCString();
+                document.cookie = cname+"="+cvalue+";"+expires;
+
+            },
+
+            getCookie : function(cname){
+                var name = cname+"=";
+                var ca = document.cookie.split(';');
+                for(i=0; i<ca.length; i++){
+                    var c = ca[i];
+                    while(c.charAt(0)==' ')  c = c.substring(1);
+                    if(c.indexOf(name)!='-1') return c.substring(name.length, c.length);
                 }
+                return "";
+            },
+
+            isLoggedIn : function(){
+                var userId =   this.getCookie('userId');
+
+                if(typeof userId == 'undefined' || userId==""){
+                    return false
+                }
+                return true;
+
+            },
+
+            getName : function(){
+
+                if(this.isLoggedIn()){
+                    return this.getCookie('name');
+                }else{
+                    $location.path('/home');
+                }
+            },
+
+            deleteCookies : function(){
+                document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                document.cookie = "roleId=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+
+                return !this.isLoggedIn();
             }
+
+
         }
     }]);
 
@@ -116,13 +198,18 @@ var app = angular.module('project', ['ngRoute'])
 
 
 
-    app.controller('DashboardCtrl', ['$scope',function($scope) {
 
+
+    app.controller('DashboardCtrl', ['$scope','loginFact',function($scope, loginFact) {
+        if(!loginFact.isLoggedIn()){
+            $location.path('/login');
+        }
     }]);
 
+
+
+
     app.controller('ListRoleCtrl',['$scope','RoleFactory',function($scope,RoleFactory){
-
-
 
             RoleFactory.getRoles()
                 .success(function (result) {
@@ -203,42 +290,58 @@ var app = angular.module('project', ['ngRoute'])
 
 
 
-    app.controller('TodoCtrl',['$scope','TodoFactory',function($scope,TodoFactory){
+    app.controller('TodoCtrl',['$scope','$location','$routeParams','loginFact','TodoFactory',function($scope,$location, $routeParams, loginFact, TodoFactory){
+           if(!loginFact.isLoggedIn()){
+               $location.path('/login');
+           }else{
 
-          TodoFactory.getTodos(1)
-                .success(function(result){
-                    $scope.todos = result;
-                })
-                .error(function(error){
-                    $scope.status = 'Error occured while fetching data'+error.statusText;
-                })
+               TodoFactory.getTodos($routeParams.projectId)
+                   .success(function(data,status,headers,config){
+                       $scope.todos = data.todos;
+                       $scope.projects = data.projects;
+                       $scope.activeproject = typeof $routeParams.projectId !== 'undefined' ? $routeParams.projectId : 'all';
 
-          $scope.deleteTodo = function(id){
-              var title = $scope.todos[id].title;
-              TodoFactory.deleteTodo(this.todo.id)
-                  .success(function(data,status,headers,config){
-                      if(status ==200){
-                          $scope.todos.splice(id, 1);
-                          $scope.status = "Delete todo : "+title;
-                      }
-                  })
-                  .error(function(data,status,headers,config){
+                   })
+                   .error(function(data,status,headers,config){
+                       $scope.status = 'Error occured while fetching data';
+                   })
 
-                  });
+               $scope.deleteTodo = function(id){
+                   var title = $scope.todos[id].title;
+                   TodoFactory.deleteTodo(this.todo.id)
+                       .success(function(data,status,headers,config){
+                           if(status ==200){
+                               $scope.todos.splice(id, 1);
+                               $scope.status = "Delete todo : "+title;
+                           }
+                       })
+                       .error(function(data,status,headers,config){
 
-          }
+                       });
+
+               }
+
+           }
+
     }]);
 
 
-    app.controller('AddTodoCtrl',['$scope','$location','TodoFactory',function($scope,$location,TodoFactory){
+    app.controller('AddTodoCtrl',['$scope','$location','Project','TodoFactory',function($scope,$location,Project,TodoFactory){
 
-
-
-        $scope.projects = [
+        /*$scope.projects = [
             {id:1, name:'ESI-QMS Project'},
             {id:2, name:'Pixcelcms Project'},
-            {id:3, name:'Myfarah Project'},
-        ];
+            {id:3, name:'Myfarah Project'}
+        ];*/
+
+        Project.getAllActiveProjectListByUser()
+            .success(function(data,status,headers,config){
+
+                $scope.projects = data;
+            })
+            .error(function(data,status,headers,config){
+
+            });
 
 
         $scope.saveTodo = function(){
@@ -300,9 +403,44 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
 
-    app.controller('LoginCtrl',['$scope','loginFact',function($scope,loginFact){
+    app.controller('LoginCtrl',['$scope','$location','loginFact',function($scope,$location,loginFact){
+
+        $scope.loginerror = false;
+        $scope.ctrlerror = '';
+
+        if(loginFact.isLoggedIn()){
+            $location.path('/home');
+        }
+
         $scope.loginUser = function(){
-            loginFact.authenticate($scope.login);
+            loginFact.authenticate($scope.login)
+                .success(function(data, status, headers, config){
+                    $scope.loginerror = !data.login;
+                    if(data.login===false && status==200){
+                        //login failed
+                        $scope.ctrlerror = data.message;
+                    }else{
+                        // login successfull
+                        $scope.ctrlerror = '';
+                        loginFact.setCookie('userId',data.user.id,360);
+                        loginFact.setCookie('roleId',data.user.role_id,360);
+                        loginFact.setCookie('name',data.user.first_name+' '+data.user.last_name,360);
+                        $location.path('/home');
+                    }
+                })
+                .error(function(data, status, headers, config){
+                    $scope.loginerror = true;
+                    $scope.ctrlerror = 'Error occured, error code '+status
+                })
+
+        }
+
+    }]);
+
+
+    app.controller('LogoutCtrl',['$scope','$location','loginFact',function($scope,$location,loginFact){
+        if(loginFact.deleteCookies()){
+            $location.path('/login');
         }
     }]);
 
