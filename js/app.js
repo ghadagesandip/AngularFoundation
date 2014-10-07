@@ -14,6 +14,7 @@ var app = angular.module('project', ['ngRoute'])
 
             .when('/users',{title:"Users",controller:'ListUsersCtrl',templateUrl:'Views/Users/listusers.html'})
             .when('/my-projects',{title:"Project",controller:'ListProjectCtrl',templateUrl:'Views/MyProjects/listprojects.html'})
+            .when('/view-project-details/:id',{title:"View Project Details",controller:'ViewDetailsProjectCtrl',templateUrl:'Views/MyProjects/project-details.html'})
             .when('/bug-types',{title:"Bug types",controller:'ListBugTypeCtrl',templateUrl:'Views/BugTypes/listbugtypes.html'})
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
@@ -118,10 +119,13 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
 
-    app.factory('Project',['$http','baseUrl',function($http,baseUrl){
+    app.factory('ProjectFactory',['$http','loginFact','baseUrl',function($http, loginFact, baseUrl){
         return {
-            getAllActiveProjectListByUser : function(){
-                return $http.get(baseUrl+'getAllActiveProjectListByUser/'+1);
+            myprojects : function(){
+                return $http.get(baseUrl+'my-projects/'+loginFact.getCookie('userId'));
+            },
+            getProjectDetails : function(id){
+                return $http.get(baseUrl+'get-project-details/'+id);
             }
         }
     }]);
@@ -271,9 +275,35 @@ var app = angular.module('project', ['ngRoute'])
         }
     }]);
 
-    app.controller('ListProjectCtrl',['$scope',function($scope){
 
+
+
+    app.controller('ListProjectCtrl',['$scope','$location','ProjectFactory','loginFact',function($scope,$location,ProjectFactory,loginFact){
+            if(!loginFact.isLoggedIn()){
+                $location.path('/login');
+            }else{
+                ProjectFactory.myprojects()
+                    .success(function(data,status,headers,config){
+                        $scope.projects = data;
+
+                    })
+                    .error(function(data,status,headers,config){
+
+                    })
+            }
     }]);
+
+
+    app.controller('ViewDetailsProjectCtrl',['$scope','$location','$routeParams','ProjectFactory',function($scope,$location,$routeParams,ProjectFactory){
+        ProjectFactory.getProjectDetails($routeParams.id)
+            .success(function(data,status,headers,config){
+                $scope.project = data;
+            })
+            .error(function(data,status,headers,config){
+
+            })
+    }]);
+
 
     app.controller('ListBugTypeCtrl',['$scope',function($scope){
 

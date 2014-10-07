@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="breadcrumbs">
+            <li><a href="#/home">Home</a></li>
+            <li><a href="#/my-projects">My projects</a></li>
+            <li>View project details</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 columns">Project Name</div>
+        <div class="large-10 columns" data-ng-bind="project.name"></div>
+    </div>
+
+    <div class="large-12 columns">
+        <div class="large-2 columns">Users</div>
+        <div class="large-10 columns">
+            <ul>
+                <li data-ng-repeat="user in project.users">{{user.first_name}} {{user.last_name}} - {{user.role.name}}</li>
+            </ul>
+        </div>
+    </div>
+
+</div>

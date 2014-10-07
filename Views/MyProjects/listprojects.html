@@ -1,1 +1,41 @@
-list projects
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="breadcrumbs">
+            <li><a href="#/home">Home</a></li>
+            <li>My Projects</li>
+        </ul>
+    </div>
+</div>
+        
+        
+<div class="row">
+    <div class="large-6 large-offset-6 columns">
+        <input type="text" data-ng-model="searchtext" placeholder="Search project..."/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <table class="large-12 columns">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Project Name</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="project in filtered =(projects|filter:searchtext)">
+                <td>{{project.id}}</td>
+                <td>{{project.name}}</td>
+                <td><a href="#/view-project-details/{{project.id}}">View Details</a></td>
+            </tr>
+            <tr ng-show="!filtered.length">
+                <td colspan="6" class="text-center">
+                    <div class="round alert label">No records found</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
