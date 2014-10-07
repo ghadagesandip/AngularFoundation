@@ -42,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="todo in filtered = (todos |filter:searchText)" >
+            <tr data-ng-repeat="todo in filtered = (todos |filter:searchText)">
                 <td data-ng-bind="todo.id"></td>
                 <td data-ng-bind="todo.title"></td>
                 <td data-ng-bind="todo.description"></td>
@@ -52,15 +52,8 @@
                     <a class="button alert tiny small" ng-click="deleteTodo($index)">Delete</a>
                 </td>
             </tr>
-
-            <tr ng-show="!filtered.length">
-                <td colspan="6" class="text-center">
-                    <div class="round alert label">No records found</div>
-                </td>
-            </tr>
-
             </tbody>
-
         </table>
+        <emptytr dataarr="filtered.length"></emptytr>
     </div>
 </div>

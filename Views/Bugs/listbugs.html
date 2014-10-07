@@ -1,1 +1,57 @@
-list all bugs here
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="breadcrumbs">
+            <li><a href="#/homes">Home</a></li>
+            <li>Bugs</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row" ng-show="bug.status">
+    <div class="large-12 columns">
+        <div class="success alert-box"  data-ng-bind="bug.status"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <dl class="sub-nav">
+            <dt>Project:</dt>
+            <dd ng-class="{active : activeproject == 'all'}"><a>All</a></dd>
+            <dd ng-class="{active : activeproject == projectuid}" data-ng-repeat="(projectuid, projectname) in projects"> <a>{{projectname}}</a></dd>
+        </dl>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="large-6 columns">
+        <a class="tiny button" href="#/add-new-bug">Add New</a>
+    </div>
+    <div class="large-6 columns">
+        <input type="text" placeholder="search..." data-ng-model="searchtext"/>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="large-12 columns">
+        <table class="large-12 columns">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>title</th>
+                <th>description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="bug in filtered = (bugs |filter:searchtext)" >
+                <td>{{bug.id}}</td>
+                <td>{{bug.title}}</td>
+                <td>{{bug.description}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <emptytr dataarr="filtered.length"></emptytr>
+    </div>
+</div>

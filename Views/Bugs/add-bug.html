@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="breadcrumbs">
+            <li><a href="#/homes">Home</a></li>
+            <li><a href="#/bugs">Bugs</a></li>
+            <li>Add Bug</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <form name="frnbug" novalidate="">
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Project :
+                        <select name="project_id" ng-model="bug.project_id" ng-options="project.name for project in projects">
+                            <option value="">-- choose project --</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Bug Status :
+                        <select name="bug_status_id" ng-model="bug.bug_status_id" ng-options="bugstatus.name for bugstatus in bugStatuses">
+                            <option value="">--Choose bug status--</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Bug Type :
+                        <select name="bug_type_id" ng-model="bug.bug_type_id" ng-options="bugtype.name for bugtype in bugTypes">
+                            <option value="">--Choose bug type--</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns" >
+                    <label for="">
+                        Title:
+                        <input type="text" name="title" data-ng-model="bug.title" required/>
+                        <div data-ng-show="frnbug.title.$dirty && frnbug.title.$invalid">
+                            <span class="error" data-ng-show="frnbug.title.$error.required"> Please enter title</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Description :
+                        <textarea name="description" data-ng-model="bug.description" cols="30" rows="10"></textarea>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <input class="button success tiny" type="submit" ng-click="addBug()" ng-disabled="frnbug.$invalid" value="Add Bug"/>
+                    <a href="#/bugs" class="button tiny secondary"> Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

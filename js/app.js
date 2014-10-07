@@ -18,6 +18,7 @@ var app = angular.module('project', ['ngRoute'])
             .when('/bug-types',{title:"Bug types",controller:'ListBugTypeCtrl',templateUrl:'Views/BugTypes/listbugtypes.html'})
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
+            .when('/add-new-bug',{title:"Add new bug",controller:"AddBugCtrl",templateUrl:'Views/Bugs/add-bug.html'})
 
             .when('/todos',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
             .when('/todos/project/:projectId',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
@@ -37,10 +38,7 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
 
-
-
-
-    app.directive('error',function(){
+    app.directive('autherror',function(){
        return{
            restrict:"E",
            replace:true,
@@ -64,6 +62,17 @@ var app = angular.module('project', ['ngRoute'])
        }
     });
 
+    app.directive('emptytr',function(){
+
+        return {
+           restrict:"E",
+           replace : true,
+           scope:{
+               dataarr : "="
+           },
+           template:"<div data-ng-show='!dataarr' class='text-center'><span class='round alert label'>No records found</span></div>"
+       }
+    });
 
 
 
@@ -129,6 +138,19 @@ var app = angular.module('project', ['ngRoute'])
             }
         }
     }]);
+
+
+    app.factory('BugFactory',['$http','loginFact','baseUrl',function($http, loginFact, baseUrl){
+        return {
+            myallbugs : function(){
+                return $http.get(baseUrl+'get-all-bugs/'+loginFact.getCookie('userId'))
+            },
+            getProjectsAndbugStatusType: function(){
+                return $http.get(baseUrl+'getProjectsAndbugStatusType/'+loginFact.getCookie('userId'))
+            }
+        }
+    }]);
+
 
 
     app.factory('loginFact',['$http','$location','baseUrl',function($http, $location, baseUrl){
@@ -313,10 +335,41 @@ var app = angular.module('project', ['ngRoute'])
 
     }]);
 
-    app.controller('BugCtrl',['$scope',function($scope){
 
+    app.controller('BugCtrl',['$scope','$location','loginFact','BugFactory',function($scope,$location,loginFact,BugFactory){
+        if(!loginFact.isLoggedIn()){
+            $location.path('/login');
+        }else{
+            BugFactory.myallbugs()
+                .success(function(data,status,headers,config){
+                    $scope.activeproject = 'all';
+                    $scope.bugs = data.bugs;
+                    $scope.projects = data.projects;
+
+                })
+                .error(function(data,status,headers,config){
+
+                })
+
+        }
     }]);
 
+
+    app.controller('AddBugCtrl',['$scope','$location','loginFact','BugFactory','$routeParams',function($scope, $location, loginFact, BugFactory,$routeParams){
+         if(!loginFact.isLoggedIn()){
+             $location.path('/login');
+         }else{
+             BugFactory.getProjectsAndbugStatusType()
+                 .success(function(data,status,headers,config){
+                     $scope.projects = data.projects;
+                     $scope.bugStatuses = data.bugstatuses;
+                     $scope.bugTypes = data.bugtypes;
+                 })
+                 .error(function(){
+
+                 })
+         }
+    }]);
 
 
 
