@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="breadcrumbs">
+            <li><a href="#/homes">Home</a></li>
+            <li><a href="#/bugs">Bugs</a></li>
+            <li>View Bug details</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <span class="error" data-ng-show="errormessage" data-ng-bind="errormessage"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+      <div class="large-2 columns">Id :</div>
+      <div class="large-10 columns">{{bug.id}}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 columns">Title :</div>
+        <div class="large-10 columns">{{bug.title}}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 columns">Description :</div>
+        <div class="large-10 columns">{{bug.description}}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 columns">Expected Close Date :</div>
+        <div class="large-10 columns">{{bug.expected_close_date}}</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 columns">created on :</div>
+        <div class="large-10 columns">{{bug.created_at}}</div>
+    </div>
+</div>
+
+

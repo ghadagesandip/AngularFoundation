@@ -15,10 +15,13 @@ var app = angular.module('project', ['ngRoute'])
             .when('/users',{title:"Users",controller:'ListUsersCtrl',templateUrl:'Views/Users/listusers.html'})
             .when('/my-projects',{title:"Project",controller:'ListProjectCtrl',templateUrl:'Views/MyProjects/listprojects.html'})
             .when('/view-project-details/:id',{title:"View Project Details",controller:'ViewDetailsProjectCtrl',templateUrl:'Views/MyProjects/project-details.html'})
+
             .when('/bug-types',{title:"Bug types",controller:'ListBugTypeCtrl',templateUrl:'Views/BugTypes/listbugtypes.html'})
             .when('/bug-status',{title:"Bug Status",controller:'BugStatusCtrl',templateUrl:'Views/BugStatus/listbugstatus.html'})
             .when('/bugs',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
+            .when('/bugs/project/:id',{title:"Bugs",controller:"BugCtrl",templateUrl:'Views/Bugs/listbugs.html'})
             .when('/add-new-bug',{title:"Add new bug",controller:"AddBugCtrl",templateUrl:'Views/Bugs/add-bug.html'})
+            .when('/view-bug-details/:id',{title:"View project details", controller:"ViewBugDetails",templateUrl:'Views/Bugs/view-bug-details.html'})
 
             .when('/todos',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
             .when('/todos/project/:projectId',{title:"TODO List",controller:"TodoCtrl",templateUrl:'Views/Todos/index.html'})
@@ -76,9 +79,6 @@ var app = angular.module('project', ['ngRoute'])
 
 
 
-
-
-
     app.factory('RoleFactory',['$http','baseUrl' ,function ($http,baseUrl) {
         return{
             getRoles:function(){
@@ -111,7 +111,6 @@ var app = angular.module('project', ['ngRoute'])
                 projectId = typeof projectId !== 'undefined' ? '/'+projectId : '';
                 return $http.get(baseUrl+'getTodos/'+loginFact.getCookie('userId')+projectId);
             },
-
             saveTodo : function(todo){
                 return $http.post(baseUrl+'saveTodo',todo);
             },
@@ -141,12 +140,22 @@ var app = angular.module('project', ['ngRoute'])
 
 
     app.factory('BugFactory',['$http','loginFact','baseUrl',function($http, loginFact, baseUrl){
+
         return {
             myallbugs : function(){
                 return $http.get(baseUrl+'get-all-bugs/'+loginFact.getCookie('userId'))
             },
-            getProjectsAndbugStatusType: function(){
-                return $http.get(baseUrl+'getProjectsAndbugStatusType/'+loginFact.getCookie('userId'))
+            getProjectsAndbugType: function(){
+                return $http.get(baseUrl+'getProjectsAndbugType/'+loginFact.getCookie('userId'))
+            },
+            addBug : function(bugData){
+                return $http.post(baseUrl+'add-bug',bugData);
+            },
+            getProjectUsers : function(projectId){
+                return $http.get(baseUrl+'get-project-users/'+projectId);
+            },
+            getBugDetails : function(bugId){
+                return $http.get(baseUrl+'get-bug-details/'+bugId);
             }
         }
     }]);
@@ -345,13 +354,46 @@ var app = angular.module('project', ['ngRoute'])
                     $scope.activeproject = 'all';
                     $scope.bugs = data.bugs;
                     $scope.projects = data.projects;
-
+                    $scope.selectedBugId = data.bugs[0].id;
                 })
                 .error(function(data,status,headers,config){
 
                 })
 
+
+            $scope.setSelection = function(id){
+                $scope.selectedBugId = id;
+            }
+
+            $scope.showProject = function(projectId){
+                $scope.activeproject = projectId;
+            }
+
+
+            $scope.showProjectsCond = function($projectId){
+
+                if($scope.activeproject==='all'){
+                    return true;
+                }
+                return $projectId==$scope.activeproject
+            }
         }
+    }]);
+
+
+    app.controller('ViewBugDetails',['$scope','$location','$routeParams','loginFact','BugFactory',function($scope,$location,$routeParams,loginFact,BugFactory){
+         if(!loginFact.isLoggedIn()){
+             $location.path('/');
+         }else{
+             $scope.errormessage= false;
+             BugFactory.getBugDetails($routeParams.id)
+                 .success(function(data,status,headers,config){
+                    $scope.bug= data;
+                 })
+                 .error(function(data,status,headers,config){
+                    $scope.errormessage = "Sorry, error occured while fetching data. Error code : "+status;
+                 })
+         }
     }]);
 
 
@@ -359,15 +401,41 @@ var app = angular.module('project', ['ngRoute'])
          if(!loginFact.isLoggedIn()){
              $location.path('/login');
          }else{
-             BugFactory.getProjectsAndbugStatusType()
+             BugFactory.getProjectsAndbugType()
                  .success(function(data,status,headers,config){
                      $scope.projects = data.projects;
-                     $scope.bugStatuses = data.bugstatuses;
-                     $scope.bugTypes = data.bugtypes;
+                     $scope.bugtypes = data.bugtypes;
+                     $scope.projectUsers = {}
                  })
                  .error(function(){
 
                  })
+
+             $scope.addBug = function(){
+                 $scope.bug.assigned_by = loginFact.getCookie('userId');
+                 $scope.bug.project_id = $scope.bug.project_id.id;
+                 $scope.bug.bug_status_id = 1;
+                 $scope.bug.bug_type_id = $scope.bug.bug_type_id.id;
+                 $scope.bug.assigned_to = $scope.bug.assigned_to.id;
+                 BugFactory.addBug($scope.bug)
+                     .success(function(data,status,headers,config){
+                        $location.path('/bugs');
+                     })
+                     .error(function(data,status,headers,config){
+
+                     });
+             }
+
+             $scope.loadProjects = function(){
+
+                 BugFactory.getProjectUsers($scope.bug.project_id.id)
+                     .success(function(data,status,headers,config){
+                        $scope.projectUsers = data;
+                     })
+                     .error(function(data,status,headers,config){
+
+                     })
+             }
          }
     }]);
 
@@ -409,43 +477,45 @@ var app = angular.module('project', ['ngRoute'])
     }]);
 
 
-    app.controller('AddTodoCtrl',['$scope','$location','Project','TodoFactory',function($scope,$location,Project,TodoFactory){
+    app.controller('AddTodoCtrl',['$scope','$location','loginFact','ProjectFactory','TodoFactory',function($scope,$location,loginFact,ProjectFactory,TodoFactory){
 
-        /*$scope.projects = [
-            {id:1, name:'ESI-QMS Project'},
-            {id:2, name:'Pixcelcms Project'},
-            {id:3, name:'Myfarah Project'}
-        ];*/
+        if(!loginFact.isLoggedIn()){
+            $location.path('/login');
+        }else{
+            ProjectFactory.myprojects()
+                .success(function(data,status,headers,config){
+                    $scope.projects = data;
 
-        Project.getAllActiveProjectListByUser()
-            .success(function(data,status,headers,config){
-
-                $scope.projects = data;
-            })
-            .error(function(data,status,headers,config){
-
-            });
-
-
-        $scope.saveTodo = function(){
-
-            $scope.todo.user_id = 1;
-            $scope.todo.project_id = 1;
-            TodoFactory.saveTodo($scope.todo)
-                .success(function(result){
-                    $scope.todos = {}
-                    $scope.status = 'todo saved';
-                    $location.path('/todos');
                 })
-                .error(function(){
+                .error(function(data,status,headers,config){
 
-                });
+                })
+
+
+            $scope.saveTodo = function(){
+
+                $scope.todo.user_id = 1;
+                $scope.todo.project_id = 1;
+                TodoFactory.saveTodo($scope.todo)
+                    .success(function(result){
+                        $scope.todos = {}
+                        $scope.status = 'todo saved';
+                        $location.path('/todos');
+                    })
+                    .error(function(){
+
+                    });
+            }
+
+
+            $scope.UpdateStatus = function(){
+                $scope.todo.todo_status = $scope.todo.todo_status;
+            }
+
+
         }
 
 
-        $scope.UpdateStatus = function(){
-            $scope.todo.todo_status = $scope.todo.todo_status;
-        }
     }]);
 
 

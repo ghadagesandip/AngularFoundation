@@ -17,8 +17,8 @@
     <div class="large-12 columns">
         <dl class="sub-nav">
             <dt>Project:</dt>
-            <dd ng-class="{active : activeproject == 'all'}"><a>All</a></dd>
-            <dd ng-class="{active : activeproject == projectuid}" data-ng-repeat="(projectuid, projectname) in projects"> <a>{{projectname}}</a></dd>
+            <dd ng-class="{active : activeproject == 'all'}"><a  ng-click="showProject('all')">All</a></dd>
+            <dd ng-class="{active : activeproject == projectuid}" data-ng-repeat="(projectuid, projectname) in projects"> <a ng-click="showProject(projectuid)">{{projectname}}</a></dd>
         </dl>
     </div>
 </div>
@@ -29,29 +29,36 @@
         <a class="tiny button" href="#/add-new-bug">Add New</a>
     </div>
     <div class="large-6 columns">
-        <input type="text" placeholder="search..." data-ng-model="searchtext"/>
+        <input type="text" placeholder="search..." data-ng-model="searchtext.title"/>
     </div>
 </div>
 
 <div class="row">
 
-    <div class="large-12 columns">
-        <table class="large-12 columns">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>title</th>
-                <th>description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr data-ng-repeat="bug in filtered = (bugs |filter:searchtext)" >
-                <td>{{bug.id}}</td>
-                <td>{{bug.title}}</td>
-                <td>{{bug.description}}</td>
-            </tr>
-            </tbody>
-        </table>
-        <emptytr dataarr="filtered.length"></emptytr>
+    <div class="large-4 columns">
+        <div>Bug Lists</div>
+        <ul class="inline-list panel">
+            <li data-ng-repeat="bug in filtered = (bugs |filter:searchtext)">
+                <span ng-show="showProjectsCond({{bug.project_id}})" ng-class="{selectedbug : (selectedBugId==bug.id)}" ng-click="setSelection(bug.id)">{{bug.title}}</span>
+            </li>
+            <emptytr dataarr="filtered.length"></emptytr>
+        </ul>
+
+    </div>
+
+    <div class="large-8 columns">
+         <div>
+             <div>Bug Details :</div>
+             <div data-ng-repeat="bug in bugs" class="panel" data-ng-show="(selectedBugId==bug.id)">
+                     <div><b>Description</b> : {{bug.description}}</div>
+                     <div><b>Bug Status </b>: {{bug.bug_status.name}}</div>
+                     <div><b>bug Type </b>: {{bug.bug_type.name}}</div>
+                     <div><b>Assigned by </b>: {{bug.assigned_by.first_name}} {{bug.assigned_by.last_name}}</div>
+                     <div><b>Expected close date </b>: {{bug.exected_close_date}}</div>
+                     <div><b>Created on </b>: {{bug.created_at}}</div>
+            </div>
+        </div>
+
+
     </div>
 </div>
