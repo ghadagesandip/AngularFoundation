@@ -4,3 +4,105 @@
 .selectedbug{
     background:#5da423;
 }
+
+/*
+ We're using CSS transitions for when
+ the enter and move events are triggered
+ for the element that has the .repeated-item
+ class
+*/
+
+.repeated-item.ng-enter, .repeated-item.ng-move {
+ -webkit-transition:0.5s linear all;
+ -moz-transition:0.5s linear all;
+ -o-transition:0.5s linear all;
+ transition:0.5s linear all;
+ opacity:0;
+}
+
+/*
+The ng-enter-active and ng-move-active
+are where the transition destination properties
+are set so that the animation knows what to
+animate.
+*/
+.repeated-item.ng-enter.ng-enter-active,
+.repeated-item.ng-move.ng-move-active {
+ opacity:1;
+}
+
+/*
+ We're using CSS keyframe animations for when
+ the leave event is triggered for the element
+ that has the .repeated-item class
+*/
+.repeated-item.ng-leave {
+ -webkit-animation:0.5s my_animation;
+ -moz-animation:0.5s my_animation;
+ -o-animation:0.5s my_animation;
+ animation:0.5s my_animation;
+}
+
+@keyframes my_animation {
+ from { opacity:1; }
+ to { opacity:0; }
+}
+
+/*
+ Unfortunately each browser vendor requires
+ its own definition of keyframe animation code...
+*/
+@-webkit-keyframes my_animation {
+ from { opacity:1; }
+ to { opacity:0; }
+}
+
+@-moz-keyframes my_animation {
+ from { opacity:1; }
+ to { opacity:0; }
+}
+
+@-o-keyframes my_animation {
+ from { opacity:1; }
+ to { opacity:0; }
+}
+
+
+
+.view-animate-container {
+  position:relative;
+  position:relative;
+  background:white;
+
+}
+
+.view-animate {
+  padding:10px;
+}
+
+.view-animate.ng-enter, .view-animate.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.3s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.3s;
+
+  display:block;
+  width:100%;
+  border-left:1px solid black;
+
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:10px;
+}
+
+.view-animate.ng-enter {
+  left:100%;
+}
+.view-animate.ng-enter.ng-enter-active {
+  left:0;
+}
+.view-animate.ng-leave.ng-leave-active {
+  left:-100%;
+}
+

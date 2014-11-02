@@ -17,6 +17,28 @@
 <div class="row">
     <div class="large-12 columns">
         <form novalidate name="frmUpdateTodo" ng-submit="updateTodo()">
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Project :
+                        <select ng-model="todo.project_id" ng-options=" project.name for project in projects">
+                            <option value="">-- choose project --</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Date :
+                    </label>
+                    <input type="date" name="todo_date" data-ng-model="todo.todo_date" placeholder="yyyy-MM-dd" />
+                    <div data-ng-show="frmAddTodo.todo_date.$dirty && frmAddTodo.todo_date.$invalid">
+                        <span class="error" data-ng-show="frmAddTodo.todo_date.$error.date">Not a valid date!</span>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="columns large-5">

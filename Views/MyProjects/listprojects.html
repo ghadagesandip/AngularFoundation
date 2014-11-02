@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="project in filtered =(projects|filter:searchtext)">
+            <tr data-ng-repeat="project in filtered =(projects|filter:searchtext)" class="repeated-item">
                 <td>{{project.id}}</td>
                 <td>{{project.name}}</td>
                 <td><a href="#/view-project-details/{{project.id}}">View Details</a></td>

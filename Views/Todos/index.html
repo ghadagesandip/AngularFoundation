@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="columns large-6">
+    <div class="columns large-4">
         <ul class="breadcrumbs">
             <li><a href="#/home">Home</a></li>
             <li class="current"><a>My Todos</a></li>
         </ul>
     </div>
-    <div class="large-6 columns">
+    <div class="large-8 columns">
         <dl class="sub-nav">
             <dt>project:</dt>
             <dd ng-class="{active : activeproject == 'all'}"><a href="#/todos">All</a></dd>
@@ -42,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="todo in filtered = (todos |filter:searchText)">
+            <tr class="repeated-item" data-ng-repeat="todo in filtered = (todos |filter:searchText)">
                 <td data-ng-bind="todo.id"></td>
                 <td data-ng-bind="todo.title"></td>
                 <td data-ng-bind="todo.description"></td>

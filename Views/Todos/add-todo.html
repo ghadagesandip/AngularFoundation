@@ -29,6 +29,20 @@
                     </label>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="">
+                        Date :
+                    </label>
+                    <input type="date" name="date" data-ng-model="todo.todo_date" placeholder="yyyy-MM-dd" />
+                    <div data-ng-show="frmAddTodo.date.$dirty && frmAddTodo.date.$invalid">
+                        <span class="error" data-ng-show="frmAddTodo.date.$error.date">Not a valid date!</span>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="large-5 columns">
                     <label>
@@ -41,6 +55,7 @@
                 </div>
             </div>
 
+
             <div class="row">
                 <div class="large-5 columns">
                     <label for="">
@@ -50,14 +65,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="large-5 columns">
-                    <label for="">
-                        Status :
-                    </label>
-                    <input type="checkbox" ng-change="UpdateStatus()" ng-false-value="'0'" ng-true-value="'1'"  data-ng-model="todo.todo_status" name="todo_status"/>
-                </div>
-            </div>
+
 
             <div class="row">
                 <div class="large-12 columns">

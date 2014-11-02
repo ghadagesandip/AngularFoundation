@@ -1,5 +1,5 @@
-var app = angular.module('project', ['ngRoute'])
-    app.value('baseUrl','http://10.0.11.98/BugTrackerApp/public/');
+var app = angular.module('project', ['ngRoute','ngAnimate'])
+    app.value('baseUrl','http://localhost/BugTrackerApp/public/');
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', { title:"Login", controller:'LoginCtrl', templateUrl:'Views/login.html' })
@@ -115,7 +115,7 @@ var app = angular.module('project', ['ngRoute'])
                 return $http.post(baseUrl+'saveTodo',todo);
             },
             getTodo : function(id){
-                return $http.get(baseUrl+'getTodo/'+id);
+                return $http.get(baseUrl+'getTodo/'+id+'/'+loginFact.getCookie('userId'));
             },
             updateTodo : function(id,todo){
                 return $http.put(baseUrl+'updateTodo/'+id,todo);
@@ -493,9 +493,8 @@ var app = angular.module('project', ['ngRoute'])
 
 
             $scope.saveTodo = function(){
-
-                $scope.todo.user_id = 1;
-                $scope.todo.project_id = 1;
+                $scope.todo.user_id = loginFact.getCookie('userId');
+                $scope.todo.project_id =$scope.todo.project_id.id;
                 TodoFactory.saveTodo($scope.todo)
                     .success(function(result){
                         $scope.todos = {}
@@ -514,7 +513,6 @@ var app = angular.module('project', ['ngRoute'])
 
 
         }
-
 
     }]);
 
@@ -535,7 +533,17 @@ var app = angular.module('project', ['ngRoute'])
     app.controller('UpdateTodoCtrl',['$scope','$routeParams','$location','TodoFactory',function($scope,$routeParams,$location,TodoFactory){
         TodoFactory.getTodo($routeParams.id)
             .success(function(data,status,headers,config){
-               $scope.todo = data;
+               $scope.todo = data.todo;
+                console.log(data.todo.todo_date)
+               $scope.projects = data.projects;
+                var project = 0;
+                angular.forEach(data.projects,function(key, val){
+                    if(key.id==data.todo.project_id){
+                        project = val;
+                    }
+                });
+               $scope.todo.project_id = data.projects[project];
+
             })
             .error(function(data, status, headers, config){
                 $scope.status = "Error occured while fetching data";
@@ -543,6 +551,7 @@ var app = angular.module('project', ['ngRoute'])
 
 
         $scope.updateTodo = function(){
+            $scope.todo.project_id = $scope.todo.project_id.id;
             TodoFactory.updateTodo($routeParams.id,$scope.todo)
                 .success(function(data, status, headers, config){
                     if(status ==200){
