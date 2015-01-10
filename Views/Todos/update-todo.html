@@ -16,12 +16,11 @@
 
 <div class="row">
     <div class="large-12 columns">
-        <form novalidate name="frmUpdateTodo" ng-submit="updateTodo()">
+        <form novalidate name="frmUpdateTodo">
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="">
-                        Project :
-                        <select ng-model="todo.project_id" ng-options=" project.name for project in projects">
+                    <label for="">Project :
+                        <select name="project" ng-model="selectedproject_id" ng-options=" project.name for project in projects">
                             <option value="">-- choose project --</option>
                         </select>
                     </label>
@@ -32,11 +31,8 @@
                 <div class="large-5 columns">
                     <label for="">
                         Date :
+                        <input type="text" name="date" data-ng-model="todo.todo_date" date-picker readonly/>
                     </label>
-                    <input type="date" name="todo_date" data-ng-model="todo.todo_date" placeholder="yyyy-MM-dd" />
-                    <div data-ng-show="frmAddTodo.todo_date.$dirty && frmAddTodo.todo_date.$invalid">
-                        <span class="error" data-ng-show="frmAddTodo.todo_date.$error.date">Not a valid date!</span>
-                    </div>
                 </div>
             </div>
 
@@ -45,8 +41,8 @@
                     <label>
                         Title :
                         <input type="text" data-ng-model="todo.title" name="title" required/>
-                        <div ng-show="frmUpdateTodo.title.$dirty && frmUpdateTodo.title.$invalid">
-                            <span class="error" ng-show="frmUpdateTodo.title.$error.required">Please enter title </span>
+                        <div ng-show="frmUpdateTodo.title.$invalid && submitted">
+                            <span class="error" ng-show="frmUpdateTodo.title.$error.required">Please enter title</span>
                         </div>
                     </label>
                 </div>
@@ -62,8 +58,22 @@
             </div>
 
             <div class="row">
+                <div class="large-5 columns">
+                    <label for="group"></label>
+                    <select name="group" id="" data-ng-model="selectedgroup_id" ng-options="group.name for group in groups"></select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="priorites"></label>
+                    <select name="priority" id="" data-ng-model="selectedpriority_id" ng-options="priority.name for priority in priorities"></select>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="large-12 columns">
-                    <input type="submit" value="Update" nd-disabled="frmUpdateTodo.$invalid" class="button small tiny"/>
+                    <input type="button" value="Update"  class="button small tiny" ng-click="updateTodo()"/>
                     <a href="#/todos" class="button small tiny secondary">Cancel</a>
                 </div>
             </div>

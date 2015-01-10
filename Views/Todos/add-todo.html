@@ -21,9 +21,8 @@
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="">
-                        Project :
-                        <select ng-model="todo.project_id" ng-options="project.name for project in projects">
+                    <label for="project">Project :
+                        <select name="project" ng-model="selectedproject_id" ng-options="project.name for project in projects">
                             <option value="">-- choose project --</option>
                         </select>
                     </label>
@@ -32,49 +31,53 @@
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="">
+                    <label for="date">
                         Date :
+                        <input type="text" name="date" data-ng-model="todo.todo_date" date-picker readonly />
                     </label>
-                    <input type="date" name="date" data-ng-model="todo.todo_date" placeholder="yyyy-MM-dd" />
-                    <div data-ng-show="frmAddTodo.date.$dirty && frmAddTodo.date.$invalid">
-                        <span class="error" data-ng-show="frmAddTodo.date.$error.date">Not a valid date!</span>
-                    </div>
                 </div>
             </div>
 
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label>
-                        Title :
+                    <label> Title :</label>
                         <input type="text" name="title" data-ng-model="todo.title" required/>
-                        <div ng-show="frmAddTodo.title.$dirty && frmAddTodo.title.$invalid">
+                        <div ng-show="frmAddTodo.title.$invalid && submitted">
                             <span class="error" ng-show="frmAddTodo.title.$error.required">Please enter title</span>
                         </div>
-                    </label>
                 </div>
             </div>
 
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="">
-                        Description :
-                        <textarea name="description" data-ng-model="todo.description" id="" cols="30" rows="10"></textarea>
-                    </label>
+                    <label for=""> Description :</label>
+                    <textarea name="description" data-ng-model="todo.description" id="" cols="30" rows="10"></textarea>
                 </div>
             </div>
 
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="group"></label>
+                    <select name="group" id="" data-ng-model="selectedgroup_id" ng-options="group.name for group in groups"></select>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="large-5 columns">
+                    <label for="priorites"></label>
+                    <select name="priority" id="" data-ng-model="selectedpriority_id" ng-options="priority.name for priority in priorities"></select>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="large-12 columns">
-                    <input type="submit"  ng-click="saveTodo()" value="Add" ng-disabled="frmAddTodo.$invalid" class="button small tiny"/>
+                    <input type="button"  ng-click="saveTodo()" value="Add" class="button small tiny"/>
                     <a href="#/todos" class="button small secondary tiny">Cancel</a>
                 </div>
             </div>
-
-
+            
         </form>
     </div>
 </div>

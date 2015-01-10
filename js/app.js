@@ -1,5 +1,5 @@
-var app = angular.module('project', ['ngRoute','ngAnimate'])
-    app.value('baseUrl','http://10.0.11.98/BugTrackerApp/public/');
+var app = angular.module('project', ['ngRoute'])
+    app.value('baseUrl','http://192.168.0.102/BugTrackerApp/public/');
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', { title:"Login", controller:'LoginCtrl', templateUrl:'Views/login.html' })
@@ -35,5 +35,11 @@ var app = angular.module('project', ['ngRoute','ngAnimate'])
     app.run(['$location', '$rootScope', function($location, $rootScope) {
         $rootScope.$on('$routeChangeSuccess', function (event, current) {
             $rootScope.title = current.$$route.title;
+            if($location.path() =='/login' || $location.path() =='/'){
+                $rootScope.showLogout = false;
+            }else{
+                $rootScope.showLogout = true;
+            }
+
         });
     }]);

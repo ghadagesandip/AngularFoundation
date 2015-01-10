@@ -6,15 +6,15 @@
                     <legend>
                         Login
                     </legend>
-                    <form action="" novalidate name="loginForm">
+                    <form novalidate name="loginForm">
                         <auth-error ng-show="loginerror" feedback="ctrlerror"></auth-error>
                         <div class="row">
                             <div class="large-8 columns">
                                 <label for="">
                                     Username :
                                     <input type="text" name="username" data-ng-model="login.username" required/>
-                                    <div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
-                                        <span class="error" ng-show="loginForm.username.$error.required"> Please enter email adddress</span>
+                                    <div ng-show="loginForm.username.$invalid && submitted">
+                                        <span class="error" ng-show="loginForm.username.$error.required"> Please enter username</span>
                                     </div>
                                 </label>
                             </div>
@@ -26,7 +26,7 @@
                                     Password :
                                 </label>
                                 <input type="password" name="password" data-ng-model="login.password" required/>
-                                <div ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+                                <div ng-show="loginForm.password.$invalid && submitted">
                                     <span class="error" ng-show="loginForm.password.$error.required"> Please enter password</span>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
 
                         <div class="row">
                             <div class="large-8 columns">
-                                <input ng-click="loginUser()" ng-disabled="loginForm.$invalid" type="submit" value="Login" class="button tiny small-12"/>
+                                <input ng-click="loginUser()"  type="button" value="Login" class="button tiny small-12"/>
                             </div>
                         </div>
 

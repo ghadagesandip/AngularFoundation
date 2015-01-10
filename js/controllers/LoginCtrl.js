@@ -2,12 +2,20 @@ app.controller('LoginCtrl',['$scope','$location','loginFact',function($scope,$lo
 
         $scope.loginerror = false;
         $scope.ctrlerror = '';
+        $scope.submitted = false;
+
 
         if(loginFact.isLoggedIn()){
             $location.path('/home');
         }
 
         $scope.loginUser = function(){
+            $scope.submitted = true;
+
+            if(!$scope.loginForm.$valid){
+                return false;
+            }
+
             loginFact.authenticate($scope.login)
                 .success(function(data, status, headers, config){
                     $scope.loginerror = !data.login;
@@ -29,5 +37,4 @@ app.controller('LoginCtrl',['$scope','$location','loginFact',function($scope,$lo
                 })
 
         }
-
     }]);

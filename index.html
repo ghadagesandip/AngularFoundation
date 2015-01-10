@@ -4,17 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-ng-bind="title">Foundation | Welcome</title>
-    <link rel="stylesheet" href="css/foundation.min.css" />
+    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css"/>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/foundation-datepicker/stylesheets/foundation-datepicker.css"/>
     <link rel="stylesheet" href="css/style.css" />
-
-
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="bower_components/modernizr/modernizr.js"></script>
+    <script type="text/javascript" src="bower_components/foundation/js/foundation.min.js"></script>
+    <script type="text/javascript" src="bower_components/foundation-datepicker/js/foundation-datepicker.js"></script>
 </head>
 <body >
     <div class="row">
         <div class="large-10 columns">
             <h1>MyApp</h1>
         </div>
-        <div class="large-2 columns">
+
+        <div class="large-2 columns" ng-if="showLogout">
             <a href="#/logout" class="button tiny alert">Logout</a>
         </div>
     </div>
@@ -22,21 +30,12 @@
     <div class="row">
         <div class="large-12 columns view-animate-container">
 
-            <div  ng-view class="view-animate">
+            <div  ng-view>
                 Loading please wait...
             </div>
         </div>
     </div>
-    <script src="js/build/angular-foundation.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <!--
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-resource.min.js"></script>
-    <script src="js/angular-route.min.js"></script>
-    <script src="js/vendor/modernizr.js"></script>
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    -->
+
 
     <script src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers/LoginCtrl.js"></script>
@@ -70,9 +69,12 @@
     <script type="text/javascript" src="js/directives/auth-error.js"></script>
     <script type="text/javascript" src="js/directives/set-active.js"></script>
     <script type="text/javascript" src="js/directives/empty-tr.js"></script>
+    <script type="text/javascript" src="js/directives/datepicker.js"></script>
 
     <script>
-        $(document).foundation();
+        $(function () {
+            $(document).foundation();
+        });
     </script>
 </body>
 </html>
