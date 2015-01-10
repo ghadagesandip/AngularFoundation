@@ -32,28 +32,12 @@
 
 <div class="row">
     <div class="large-12 columns">
-        <table class="large-12 columns">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th class="table-options">Option</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="repeated-item" data-ng-repeat="todo in filtered = (todos |filter:searchText)">
-                <td data-ng-bind="todo.id"></td>
-                <td data-ng-bind="todo.title"></td>
-                <td data-ng-bind="todo.description"></td>
-                <td>
-                    <a class="button tiny small" href="#/view-todo/{{todo.id}}">View</a>
-                    <a class="button success tiny small" href="#/update-todo/{{todo.id}}">Edit</a>
-                    <a class="button alert tiny small" ng-click="deleteTodo($index)">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <ul class="side-nav">
+            <li  data-ng-repeat="todo in filtered =(todos|filter:searchText)" ng-cloak>
+                <a href="#/view-todo/{{todo.id}}">{{todo.title}}</a>
+            </li>
+        </ul>
+
         <emptytr dataarr="filtered.length"></emptytr>
     </div>
 </div>

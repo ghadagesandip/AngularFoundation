@@ -21,7 +21,7 @@
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="project">Project :
+                    <label>Project :
                         <select name="project" ng-model="selectedproject_id" ng-options="project.name for project in projects">
                             <option value="">-- choose project --</option>
                         </select>
@@ -31,7 +31,7 @@
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="date">
+                    <label>
                         Date :
                         <input type="text" name="date" data-ng-model="todo.todo_date" date-picker readonly />
                     </label>
@@ -41,33 +41,37 @@
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label> Title :</label>
+                    <label> Title :
                         <input type="text" name="title" data-ng-model="todo.title" required/>
-                        <div ng-show="frmAddTodo.title.$invalid && submitted">
-                            <span class="error" ng-show="frmAddTodo.title.$error.required">Please enter title</span>
-                        </div>
+                    </label>
+                    <div ng-show="frmAddTodo.title.$invalid && submitted">
+                        <span class="error" ng-show="frmAddTodo.title.$error.required">Please enter title</span>
+                    </div>
                 </div>
             </div>
 
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for=""> Description :</label>
-                    <textarea name="description" data-ng-model="todo.description" id="" cols="30" rows="10"></textarea>
+                    <label> Description :
+                        <textarea name="description" data-ng-model="todo.description" id="" cols="30" rows="10"></textarea>
+                    </label>
                 </div>
             </div>
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="group"></label>
-                    <select name="group" id="" data-ng-model="selectedgroup_id" ng-options="group.name for group in groups"></select>
+                    <label>Group :
+                        <select   name="group" id="" data-ng-model="selectedgroup_id" ng-options="group.name for group in groups"></select>
+                    </label>
                 </div>
             </div>
 
             <div class="row">
                 <div class="large-5 columns">
-                    <label for="priorites"></label>
-                    <select name="priority" id="" data-ng-model="selectedpriority_id" ng-options="priority.name for priority in priorities"></select>
+                    <label>Priority :
+                        <select name="priority" id="" data-ng-model="selectedpriority_id" ng-options="priority.name for priority in priorities"></select>
+                    </label>
                 </div>
             </div>
 

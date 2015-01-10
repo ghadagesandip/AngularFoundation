@@ -10,36 +10,51 @@
 
 <div class="row">
     <div class="large-12 columns">
-        <div class="large-2 columns">Id</div>
-        <div class="large-10 columns" data-ng-bind="todo.id"></div>
+        <div class="large-2 small-3 columns">Title</div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.title"></div>
     </div>
 </div>
 
 <div class="row">
     <div class="large-12 columns">
-        <div class="large-2 columns">Project</div>
-        <div class="large-10 columns" data-ng-bind="todo.project.name"></div>
+        <div class="large-2 small-3 columns">Task</div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.description"></div>
     </div>
 </div>
 
 <div class="row">
     <div class="large-12 columns">
-        <div class="large-2 columns">Title</div>
-        <div class="large-10 columns" data-ng-bind="todo.title"></div>
+        <div class="large-2 small-3 columns">Project</div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.project.name"></div>
     </div>
 </div>
 
 <div class="row">
     <div class="large-12 columns">
-        <div class="large-2 columns">Description</div>
-        <div class="large-10 columns" data-ng-bind="todo.description"></div>
+        <div class="large-2 small-3 columns">Date : </div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.todo_date"></div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 small-3 columns">Status</div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.todo_status"></div>
     </div>
 </div>
 
 <div class="row">
     <div class="large-12 columns">
-        <div class="large-2 columns">Status</div>
-        <div class="large-10 columns" data-ng-bind="todo.todo_status"></div>
+        <div class="large-2 small-3 columns">Group</div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.group.name"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <div class="large-2 small-3 columns">Priority</div>
+        <div class="large-10 small-9 columns" data-ng-bind="todo.priority.name"></div>
     </div>
 </div>
 
