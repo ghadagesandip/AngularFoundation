@@ -7,7 +7,6 @@ app.controller('AddTodoCtrl',['$scope','$location','loginFact','ProjectFactory',
     }else{
         ProjectFactory.myprojects()
             .success(function(data,status,headers,config){
-                console.log(data.data.todogroups)
                 $scope.projects = data.data.projects;
                 $scope.groups = data.data.todogroups;
                 $scope.selectedgroup_id = $scope.groups[0];

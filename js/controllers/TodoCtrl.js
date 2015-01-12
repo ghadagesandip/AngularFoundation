@@ -3,12 +3,14 @@ app.controller('TodoCtrl',['$scope','$location','$routeParams','loginFact','Todo
         $location.path('/login');
     }else{
 
+        $scope.selectedTaskId = null;
+        $scope.showoption = false;
+
         TodoFactory.getTodos($routeParams.projectId)
             .success(function(data,status,headers,config){
                 $scope.todos = data.todos;
                 $scope.projects = data.projects;
                 $scope.activeproject = typeof $routeParams.projectId !== 'undefined' ? $routeParams.projectId : 'all';
-
             })
             .error(function(data,status,headers,config){
                 $scope.status = 'Error occured while fetching data';
@@ -27,8 +29,12 @@ app.controller('TodoCtrl',['$scope','$location','$routeParams','loginFact','Todo
 
                 });
 
-        }
+        };
 
+        $scope.showOptions = function(id){
+            $scope.selectedTaskId = id;
+            $scope.showoption = true;
+        };
     }
 
 }]);

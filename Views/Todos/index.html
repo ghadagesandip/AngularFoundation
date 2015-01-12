@@ -33,11 +33,11 @@
 <div class="row">
     <div class="large-12 columns">
         <ul class="side-nav">
-            <li  data-ng-repeat="todo in filtered =(todos|filter:searchText)" ng-cloak>
-                <a href="#/view-todo/{{todo.id}}">{{todo.title}}</a>
+            <li data-ng-repeat="todo in filtered =(todos|filter:searchText)" ng-cloak ng-click="showOptions(todo.id)">
+                <a class="small-8 medium-8 large-9 columns">{{todo.title}}</a>
             </li>
         </ul>
-
         <emptytr dataarr="filtered.length"></emptytr>
+        <select-options taskid="selectedTaskId" showoption="showoption"></select-options>
     </div>
 </div>
