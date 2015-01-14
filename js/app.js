@@ -1,5 +1,5 @@
 var app = angular.module('project', ['ngRoute'])
-    app.value('baseUrl','http://10.0.11.98/BugTrackerApp/public/');
+    app.value('baseUrl','http://localhost/BugTrackerApp/public/');
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', { title:"Login", controller:'LoginCtrl', templateUrl:'Views/login.html' })

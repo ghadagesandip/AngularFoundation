@@ -9,10 +9,11 @@ app.controller('LoginCtrl',['$scope','$location','loginFact',function($scope,$lo
             $location.path('/home');
         }
 
-        $scope.loginUser = function(){
+        $scope.loginUser = function(loginformdata){
+
             $scope.submitted = true;
 
-            if(!$scope.loginForm.$valid){
+            if(!$scope.loginform.$valid){
                 return false;
             }
 
