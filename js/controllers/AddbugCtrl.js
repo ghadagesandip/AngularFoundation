@@ -1,4 +1,7 @@
 app.controller('AddBugCtrl',['$scope','$location','loginFact','BugFactory','$routeParams',function($scope, $location, loginFact, BugFactory,$routeParams){
+
+    $scope.submitted = false;
+
     if(!loginFact.isLoggedIn()){
         $location.path('/login');
     }else{
@@ -12,9 +15,16 @@ app.controller('AddBugCtrl',['$scope','$location','loginFact','BugFactory','$rou
 
             })
 
+
         $scope.addBug = function(){
+            
+            $scope.submitted = true;
+
+            if(!$scope.frmbug.$valid){
+                return false;
+            }
+
             $scope.bug.assigned_by = loginFact.getCookie('userId');
-            $scope.bug.project_id = $scope.bug.project_id.id;
             $scope.bug.bug_status_id = 1;
             $scope.bug.bug_type_id = $scope.bug.bug_type_id.id;
             $scope.bug.assigned_to = $scope.bug.assigned_to.id;
@@ -26,6 +36,8 @@ app.controller('AddBugCtrl',['$scope','$location','loginFact','BugFactory','$rou
 
                 });
         }
+
+
 
         $scope.loadProjects = function(){
 

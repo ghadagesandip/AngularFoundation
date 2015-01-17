@@ -6,6 +6,6 @@ app.directive('emptytr',function(){
         scope:{
             dataarr : "="
         },
-        template:"<div data-ng-show='!dataarr' class='text-center'><span class='round alert label'>No records found</span></div>"
+        template:"<div data-ng-show='!dataarr' data-ng-init='dataarr = true' class='text-center'><span class='round alert label' ng-cloak>No records found</span></div>"
     }
 });

@@ -5,6 +5,6 @@ app.directive('authError',function(){
         scope:{
             feedback:"="
         },
-        template:"<div class='round alert label'> {{feedback}}</div>"
+        template:"<div class='round alert label' ng-cloak> {{feedback}}</div>"
     }
 });

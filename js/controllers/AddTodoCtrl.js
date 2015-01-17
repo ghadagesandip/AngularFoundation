@@ -8,10 +8,14 @@ app.controller('AddTodoCtrl',['$scope','$location','loginFact','ProjectFactory',
         ProjectFactory.myprojects()
             .success(function(data,status,headers,config){
                 $scope.projects = data.data.projects;
+                $scope.selectedproject_id = $scope.projects[0];
+
                 $scope.groups = data.data.todogroups;
                 $scope.selectedgroup_id = $scope.groups[0];
+
                 $scope.priorities = data.data.todoPriority;
                 $scope.selectedpriority_id = $scope.priorities[$scope.priorities.length-1];
+
             })
             .error(function(data,status,headers,config){
 
@@ -26,15 +30,9 @@ app.controller('AddTodoCtrl',['$scope','$location','loginFact','ProjectFactory',
                 return false;
             }
             $scope.todo.user_id = loginFact.getCookie('userId');
-            if(typeof $scope.selectedproject_id != "undefined"){
-                $scope.todo.project_id = $scope.selectedproject_id.id;
-            }else{
-                $scope.todo.project_id = null;
-            }
-
+            $scope.todo.project_id = $scope.selectedproject_id.id;
             $scope.todo.group_id = $scope.selectedgroup_id.id;
             $scope.todo.priority_id = $scope.selectedpriority_id.id;
-
 
             TodoFactory.saveTodo($scope.todo)
                 .success(function(result){

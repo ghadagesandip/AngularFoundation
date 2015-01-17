@@ -10,14 +10,17 @@
 
 <div class="row">
     <div class="large-12 columns">
-        <form name="frmbug" novalidate="">
+        <form name="frmbug" novalidate>
             <div class="row">
                 <div class="large-5 columns">
                     <label for="">
                         Project :
-                        <select name="project_id" ng-change="loadProjects()" ng-model="bug.project_id" ng-options="project.name for project in projects">
-                            <option value="">-- choose project --</option>
+                        <select name="project_id" ng-change="loadProjects()" ng-model="bug.project_id" ng-options="project.name for project in projects" required>
+                            <option value="">--Choose project--</option>
                         </select>
+                        <div data-ng-show="frmbug.project_id.$invalid && submitted">  
+                            <span class="error" data-ng-show="frmbug.project_id.$error.required"> Please select project</span>
+                        </div>
                     </label>
                 </div>
             </div>
@@ -26,9 +29,12 @@
                 <div class="large-5 columns">
                     <label for="">
                         Bug Type :
-                        <select name="bug_type_id" ng-model="bug.bug_type_id" ng-options="bugtype.name for bugtype in bugtypes">
+                        <select name="bug_type_id" ng-model="bug.bug_type_id" ng-options="bugtype.name for bugtype in bugtypes" required>
                             <option value="">--Choose bug type--</option>
                         </select>
+                        <div data-ng-show="frmbug.bug_type_id.$invalid && submitted">
+                            <span class="error" data-ng-show="frmbug.bug_type_id.$error.required">Please select bug type</span>
+                        </div>
                     </label>
                 </div>
             </div>
@@ -37,9 +43,12 @@
                 <div class="large-5 columns">
                     <label for="">
                         AssignTo :
-                        <select name="assigned_to" data-ng-model="bug.assigned_to" ng-options="(user.name) for user in projectUsers">
-                            <option value="">--Choose one user--</option>
+                        <select name="assigned_to" data-ng-model="bug.assigned_to" ng-options="(user.name) for user in projectUsers" required>
+                            <option value="">--Choose user--</option>
                         </select>
+                        <div data-ng-show="frmbug.assigned_to.$invalid && submitted" >
+                             <span class="error" data-ng-show="frmbug.assigned_to.$error.required">Please select user </span>   
+                        </div>
                     </label>
                 </div>
             </div>
@@ -48,8 +57,8 @@
                 <div class="large-5 columns">
                     <label for="">
                         Expected close date :
-                        <input type="date" name="expected_close_date" data-ng-model="bug.expected_close_date" placeholder="yyyy-MM-dd" />
-                        <div data-ng-show="frmbug.expected_close_date.$dirty && frmbug.expected_close_date.$invalid">
+                        <input type="date" name="expected_close_date" data-ng-model="bug.expected_close_date" date-picker placeholder="yyyy-MM-dd" readonly />
+                        <div data-ng-show="frmbug.expected_close_date.$invalid && submitted">
                            <span class="error" data-ng-show="frmbug.expected_close_date.$error.date">Not a valid date!</span>
                         </div>
                     </label>
@@ -63,7 +72,7 @@
                     <label for="">
                         Title:
                         <input type="text" name="title" data-ng-model="bug.title" required/>
-                        <div data-ng-show="frmbug.title.$dirty && frmbug.title.$invalid">
+                        <div data-ng-show="frmbug.title.$invalid && submitted">
                             <span class="error" data-ng-show="frmbug.title.$error.required"> Please enter title</span>
                         </div>
                     </label>
@@ -81,7 +90,7 @@
 
             <div class="row">
                 <div class="large-12 columns">
-                    <input class="button success tiny" type="submit" ng-click="addBug()" ng-disabled="frmbug.$invalid" value="Add Bug"/>
+                    <input class="button success tiny" type="button" ng-click="addBug()" value="Add Bug"/>
                     <a href="#/bugs" class="button tiny secondary"> Cancel</a>
                 </div>
             </div>

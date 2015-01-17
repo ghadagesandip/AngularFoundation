@@ -5,7 +5,7 @@ app.controller('ListProjectCtrl',['$scope','$location','ProjectFactory','loginFa
     }else{
         ProjectFactory.myprojects()
             .success(function(data,status,headers,config){
-                $scope.projects = data;
+                $scope.projects = data.data.projects;
 
             })
             .error(function(data,status,headers,config){

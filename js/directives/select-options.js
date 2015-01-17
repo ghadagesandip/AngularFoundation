@@ -5,8 +5,7 @@ app.directive('selectOptions',function(){
        scope :
            {
             taskid :"="
-           }
-       ,
+           },
        templateUrl:"Views/DirectiveTemplates/select-option.html"
    }
 });
