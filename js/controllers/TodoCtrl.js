@@ -17,6 +17,7 @@ app.controller('TodoCtrl',['$scope','$location','$routeParams','loginFact','Todo
             })
 
         $scope.deleteTodo = function(id){
+            alert(id); return false;
             var title = $scope.todos[id].title;
             TodoFactory.deleteTodo(this.todo.id)
                 .success(function(data,status,headers,config){

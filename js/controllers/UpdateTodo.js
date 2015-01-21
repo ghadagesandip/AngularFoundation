@@ -43,14 +43,12 @@ app.controller('UpdateTodoCtrl',['$scope','$routeParams','$location','TodoFactor
             return false;
         }
 
-        if(typeof $scope.selectedproject_id != "undefined" || typeof $scope.selectedproject_id != null){
-            $scope.todo.project_id = null;
-        }else{
-            $scope.todo.project_id = $scope.selectedproject_id.id;
-        }
+        
+        $scope.todo.project_id = $scope.selectedproject_id.id;
         $scope.todo.group_id = $scope.selectedgroup_id.id;
         $scope.todo.priority_id = $scope.selectedpriority_id.id;
-
+        
+        
         TodoFactory.updateTodo($routeParams.id,$scope.todo)
             .success(function(data, status, headers, config){
                 if(status ==200){
