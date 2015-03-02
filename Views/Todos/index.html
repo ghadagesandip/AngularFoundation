@@ -34,11 +34,12 @@
     <div class="large-12 columns">
         <ul class="side-nav">
             <li data-ng-repeat="todo in filtered =(todos|filter:searchText)" ng-cloak ng-click="showOptions(todo.id)">
-                <a class="small-8 medium-8 large-9 columns">{{$index+1}} : {{todo.project.name || 'Not Available'}} - {{todo.title}}</a>
+                <a ng-href="#/view-todo/{{todo.id}}" class="small-8 medium-8 large-9 columns">{{$index+1}} : {{todo.project.name || 'Not Available'}} - {{todo.title}}</a>
+                <a ng-href="#/update-todo/{{todo.id}}" class="small-1 medium-2 large-1 columns"><i class="fi-pencil"></i></a>
+                <a ng-click="deleteTodo(todo.id,$index)" class="small-1 medium-2 large-1 columns"><i class="fi-trash"></i></a>
             </li>
         </ul>
         <emptytr dataarr="filtered.length"></emptytr>
-        <select-options taskid="selectedTaskId" showoption="showoption"></select-options>
     </div>
 </div>
 
